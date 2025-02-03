@@ -1,0 +1,708 @@
+Shell environment variables are displayed by setting:
+$ env
+
+Shell command paths are shown by setting; 
+$ $PATH
+or 
+$echo $PATH
+
+
+Bash Commands for moving
+CTRL+u deletes everything preceding the cursor in the prompt
+CTRL+a moves cursor to the beginning of prompt
+CTRL+e moves cursor to the end of the prompt
+esc+b moves cursor back a word
+esc+f moves cursor forward a word
+See: man bash "Readline Command Names" for more
+
+To redraw of fix display issues for a terminal session set:
+$ reset
+
+Arithmetic - perform simple calculations by setting compound command set:
+$ echo $(( 2+2 ))
+$ echo $(( 11/2 )) for division and then set:
+$ echo $(( 11%2 )) to get the remainder
+
+
+       - +    unary minus and plus
+       **     exponentiation
+       * / %  multiplication, division, remainder
+       + -    addition, subtraction
+       == !=  equality and inequality
+
+To reduce file size of files that are needed for process functionality such as a log file you can use truncate. You can reduce based on size 0 bytes using the -s flag set:
+$ truncate -s 0 <filename>
+
+
+To draw output in distinct columns for easier readability use column -t. This is useful for commands that produce output that is not easily read. Mount for example set:
+$ mount | column -t
+
+------------------
+|**Bash History**|
+------------------
+
+
+!# — Repeats a recently used command. Best to use it in conjunction with the history command. You can use !n to repeat the n-th command in history. You can also use !-n to repeat the command that happened n commands ago.
+
+CTRL+R search through history commands type some command in recorded in the history then bash will return the most recent matching value and will be executed by pressing ENTER; pressing CTRL+r again will return the next to the most recent match and this process CTRL+r is recursive by showing the next to most recent match or end by CTRL+C 
+
+history n-th 
+this will show the last nth history 
+ex: history 5 > will output the most recent 5 inputs
+
+
+
+-------------
+|**GENERAL**|
+-------------
+
+Help
+$ <command> --help
+brief description is displayed
+$ man <command>
+show manual pages description and options flags or options anything in [ ] brackets are optional
+
+$ man builtins 
+Some commands are not located in regular man pages, to locate builtin commands for bash use the man builtin command
+man pages are organized in sections commands may exist in multiple sections or one section depending on their function
+
+Sections 
+1 Command info
+2 System calls
+3 Library calls
+4 Special files
+5 File formats and conventions
+6 Games
+7 Misc
+8 System administration commands
+9 Kernel routines
+
+$ info <command>
+most extensive information about a command 
+
+Name,  Synopsis = syntax, Description 
+ 
+man (command) - 
+    info
+    --help
+
+Chain commands together with && or ;
+&& — If you ever want to run multiple commands in sequential order, just stick && in between each one set:
+$ [command1]&& [command2] 
+; using a semicolon will run the commands sequentially and will execute subsequent commands if the input is invalid.
+
+Kernel Info OS
+uname — Displays core system information depending on the parameters you use, such as kernel name and version, machine hardware, and operating system.
+uname -a for all info, -s for kernel name, -v for kernel version, -r for kernel release,
+
+inxi -Fz - Displays System information only works on some linux distros
+
+Create User
+#useradd --create-home <username>
+or
+#useradd -m <username>
+
+    Set password
+    $passwd <username>
+
+To delete a user with the -r flag to remove the home directory set:
+#userdel -r <username>
+
+Switch User
+    Become different user  $su - (root) or $su - username (username)
+
+Groups
+    Add user to group
+    $usermod -aG group1,group2,group3 <username>
+    confirm group association
+    $id <username>    
+Change the owner of a file or directory use -R option to change owner of all sub directories and files
+    $sudo chown <username> -R  <pathtodirectory/directoryname>/ 
+or to change both the owner and group association then use
+    $sudo chown -R <username>:<groupname> directory
+
+
+  
+    uptime — Displays time elapsed since last boot.
+    whereis — Finds the location of the executable file for a given program.
+    whoami — Displays the current user name.
+    whatis — Displays brief descriptions of command line programs. Think of it like a simplified version of man when you aren’t sure what a command does but don’t need the full manual on how to use it.
+
+date
+date "+%Y %B %d (%a) %I :%M%p" 
+cal
+cal -3 
+cal june 546
+
+screenfetch
+neofetch
+
+List Hardware - sudo lshw
+lspci
+
+Jobs — Displays all current jobs and their statuses. A job is just a representation of a running process or group of processes.
+
+Use CTRL+z to interrupt a running job and move it to background process
+
+bg/fg — Sends a foreground job to run in the background or a background job to run in the foreground. For more on jobs, see the jobs command.
+
+---------------------
+|**FILE MANAGEMENT**|
+---------------------
+The default location for your terminal to open from the menu is in your home folder, also known as ~
+Your current directory can be noted by the . operator
+
+mount/umount — Attaches and detaches a separate filesystem to your system’s main filesystem. Mostly used to make external devices, like hard drives or USB drives, interact with your computer.
+
+pwd to print working directory
+cd This will move you back to your home, same as cd ~
+    cd .. This will take you back exactly one directory, cd ../../ will move me 2 back
+touch — Changes the date accessed or date modified of the given file to right now.
+
+File Names With Spaces - if there are spaces use (\ ) in place of ( ) or type the name of the folder until [space] and then hit tab to auto complete
+
+cp: copy files (cp filename newfilename) copies file in same folder (cp filename /new folder/folderoffile)
+rm: remove or delete (rm filename)
+mv — Moves a file from one directory to another, and you can specify a different name for the file in the target directory. You can use this command to rename a file by moving it to the same directory but with a different filename. 
+rename — Changes the name of a file or a set of files. Comes with a lot of interesting parameters, allowing you to automatically rename a bunch of files according to a pattern.
+mkdir: create a new folder (mkdir newfoldername)
+rmdir: delete an empty folder (rmdir foldername)
+rm –r foldername: delete non-empty folder
+rm * removes all files in current directory
+rm <x>* removes all files with name <x>
+rmdir * removes all directories in the current directory leaving files alone
+rm -r recursive removes all files and directories
+
+*ls: list contents of current directory
+ls -a: list all contents including hidden files
+ls -r: list all contents in reverse order
+ls -p: list all contents showing file types Directories are blue followed by /, other files are white, and binary files are green
+ls -s: list all contents sorted by file size
+ls -l Provides a longer listing format including owners, permissions, size, and date modified.
+    ls -a Displays hidden files and folders as well as the normal listing.
+    ls -al Combine options to display both hidden files and in the long format.
+    ls -h Show file sizes in human readable format (K, M, Gbyte) filesizes instead of bytes. Often used in conjunction with the -l flag.
+
+Compare two files for differences use diff
+ $ diff [filename1] [filename2]
+
+
+locate — Searches the entire system for files or directories that match the search query, then outputs the absolute paths for each match. By default, it only searches in directories for which you have permissions. This is the simplest and fastest way to find a file.
+
+
+--
+File Permissions and File Owners Groups
+CHMOD and CHOWN
+
+Change file permissions
+ chmod [OPTIONS] [ugoa...] {-+=]perms.. [,...] FILE
+                  u user owner, g group, o other users, a All users remove, add, set permission rwx ,4 read 2 write 1 execute in order with respect to owner, group, global
+$chmod -R u+rwx <dirname>
+ $chmod options  NUMBER FILE 
+  $chmod -R 750 dirname
+
+CHMOD
+  1  to modify permissions of directory and subdirectories only
+  2 
+  3  to modify permissions of files only within directory and subdirectories
+  4 
+  5 No need for scripts.
+  6 
+  7 // Directories:
+  8 
+  9 find . -type d -exec chmod XXX {} \;
+ 10 // Files:
+ 11 
+ 12 find . -type f -exec chmod XXX {} \;
+
+
+Set permission to  754 (7rwx 5r-x 4r--) then file name
+
+Change Owner and or group associated directory with the -R option to change sub directory's owner:group  
+ $sudo chown user:group -R directory/ 
+or $sudo chown user filename   just change the owner of file
+   $chgrp groupname filename     Just change the group of file
+
+
+chmod +x filename to make file executable
+
+
+File Attributes
+
+man lsattr and man chattr
+ 
+To list the attributes of files within a directory use the lsattr command set:
+
+lsattr
+
+  - a = makes a file append only (only root can do this)
+  - s = secure delete makes a file that will zero the blocks where it was stored
+  - i = makes a file immutable (only root can do this)
+
+To set an attribute on a file use chattr +<attribute> or to remove an attribute use chattr -<attribute> set:
+
+chattr +/-(attribute) 
+
+The immutable bit is use this set:
+
+sudo chattr +i <filename>
+to remove set:
+sudo chattr -i <filename> 
+
+A file with the 'i' attribute cannot be modified: it cannot be deleted  or  renamed,  no
+link  can  be created to this file, most of the file's metadata can not be modified, and
+the file can not be opened in write mode.  Only the superuser or  a  process  possessing
+the CAP_LINUX_IMMUTABLE capability can set or clear this attribute.
+
+----------------------
+|**Data Destruction**|
+----------------------
+
+
+man shred
+
+to take file and ovewrite with random data
+
+shred <filename>
+
+to overwrite with random data and delete the file run with -u option set:
+
+shred -u <filename>
+
+two linux files with random data are
+cat /dev/random
+cat /dev/urandom
+
+To write over empty disk space which may or may not contain sensitive files you may have neglected to shred create a file set:
+
+touch <filename>
+
+Then use the file /dev/urandom to redirect random data into the file which will begin to expand
+
+cat /dev/urandom > <expanding_filename>
+
+Let the command continue till there is an error for no more disk space. Then you can remove the file and reclaim the space the expanding file is consuming set:
+
+rm <expanding_filename>
+
+You may want to overwrite the file multiple times to ensure any sensitive information has been destroyed.
+
+You can reclaim the space by 'blanking' or writing 0 over the random data with /dev/null set:
+
+
+cat /dev/null > <expanding_filename>
+
+
+You can use dd to overwrite large files with random data set:
+
+dd if=/dev/urandom of=<filename>
+
+
+-----------------------
+|**SYSTEM INFORMATION**|
+-----------------------
+
+cat /proc/cpuinfo
+cat /proc/gpuinfo
+cat /proc/meminfo
+
+du -cksh  calculate the size of the current folder
+du -cksh target_name   calculate the size of a folder or file
+
+Space Free remaining space on HDD
+
+$df — Displays how much space is used and free on your system.
+$df -h
+
+$du 
+$du -h <file>/<dir>
+$du -ha home
+
+free — Displays how much RAM is used and free on your system.
+
+---------------------
+|**Linux Processes**|
+---------------------
+
+
+ps — Displays a list of running processes in yours shell.
+ps f - Displays a list of process and state information with command hierarchy; state S R T 
+P
+ps
+ps ax
+ps axc | less
+ps axc | grep vlc
+
+Process IDs
+pidof vlc
+pidof firefox
+kill <#pid>
+
+Start a process set:
+ [command]
+Fork or replace current process with another process set: 
+exec [command]
+see processes in your shell: ps f
+
+Kill processes:
+ kill -15	[pid]	<- send sigterm
+ kill		[pid]	<- also sends sigterm
+ kill -2	[pic]	<- sends sigint
+ kill -1	[pid]	<- send sighup
+kill -9	[pid]	<- sends sigkill
+
+Suspend a process running in foreground:
+CTRL+z
+
+Run a command and immediately move to the background use & set:
+<command/process> -flags &
+
+List jobs table set:
+jobs
+
+send stopped process to background set:
+bg
+bg [job#] 
+
+Bring process to foreground: 
+fg
+fg [job#]
+
+
+task/processes
+top
+htop
+gotop
+
+State stat=STAT
+               D    uninterruptible sleep (usually IO)
+               I    Idle kernel thread
+               R    running or runnable (on run queue)
+               S    interruptible sleep (waiting for an event to complete)
+               T    stopped by job control signal
+               t    stopped by debugger during the tracing
+               W    paging (not valid since the 2.6.xx kernel)
+               X    dead (should never be seen)
+               Z    defunct ("zombie") process, terminated but not reaped by its parent
+
+For  BSD  formats  and  when  the  stat keyword is used, additional characters may be
+       displayed:
+
+               <    high-priority (not nice to other users)
+               N    low-priority (nice to other users)
+               L    has pages locked into memory (for real-time and custom IO)
+               s    is a session leader
+               l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+               +    is in the foreground process group
+
+
+
+-------------
+|**SYSTEMD**|
+-------------
+System D manages units; units are services, timers, mounts, automounts, sockets and more.
+
+Running Services 
+systemctl start <servicename>
+systemctl stop  <servicename>
+systemctl restart <servicename>  
+systemctl reload <servicename> this will reload the configuration file without stopping the service so it won't be interrupted for users using that service
+systemctl status <servicename>
+systemctl enable/disable <servicename>
+
+To reload systemd and the configuration files/changes set:
+# systemctl daemon-reload
+
+System D unit Directories
+/etc/systemd/system
+/run/systemd/system
+/lib/systemd/system
+
+
+To list all the units that are services loaded by SystemD set:
+systemctl list-units --type=service
+
+To list the all services that SystemD has loaded and are active set:
+systemctl --type=service --state=active
+
+To list only the services that are currently running set:
+systemctl --type=service --state=running      
+
+  Alternatively set:
+systemctl list-units --state=running "*.service"
+
+
+To list a dependancy tree of the services you can set:
+systemctl list-units list-dependencies
+??systemctl --type=service --state=active --with-dependencies
+
+To view all logs run the journalctl command
+journalctl 
+
+To view the end of the log pass the -e and to view a short explanation pass the -x flags
+Passing the -u <unit name> command specifies the service/unit log you would like to view
+
+journalctl -xe -u <service/unitname>
+
+Example
+journalctl -xe -u systemd-logind
+
+To view errors during boot set:
+journalctl -p 3 -b
+
+
+-------------------------------
+|**PACMAN PACKAGE MANAGEMENT**|
+-------------------------------
+To install a package set:
+$ sudo pacman -S <packagename>
+
+To sync the remote repositories database:
+$ sudo pacman -Sy
+
+To install packages and sync the repositories and update use both the y and u flags set:
+$ sudo pacman -Syu and if recently synced you may want to force sync using $ sudo pacman -Syyu
+this equivalent to sudo apt-get update && apt-get upgrade
+
+To search remote repositories for a package and its associated packages set:
+$ sudo pacman -Ss <packagename>
+
+To search locally for package and its associated packages set:
+$ sudo pacman -Qs
+
+To see what packages belong to a package name group set:
+$ sudo pacman -Sg <packagename>
+
+To remove a package and its dependencies which are not required by any other installed package set:
+$ sudo pacman -Rs <packagename>
+
+You will need to remove the files that an application creates such as dot files in the users home directory 
+
+*Also to prevent the creation of backup files made by the pacman during removal use the n flag set:
+$ sudo pacman -Rsn <packagename>
+
+This will remove the package and its dependencies which are not required by other packages and prevent the creation of backup files made by pacman during removal
+you will need to remove the files that an application creates such as dot files in the users home directory 
+
+
+To list information of a locally installed package set:
+$ sudo pacman -Qi <packagename>
+
+Passing two i's will display the list of back up files and their modification states
+$ sudo pacman -Qii <packagename>
+
+To list a list of files installed by a package set:
+$ sudo pacman -Qi <packagename>
+
+To list the set of packages explicitly installed and there dependencies set:
+$ sudo pacman -Qe
+
+To list the set of packages installed from main repositories
+$ sudo pacman -Qn
+
+To list the set of packages installed from the AUR set:
+$ sudo pacman -Qm 
+
+To list all packages no longer required as dependencies set:
+$ sudo pacman -Qdt
+
+To list installed packages using apt
+set: apt list --installed
+
+---------------------------
+|**NETWORKING MANAGEMENT**|
+---------------------------
+ip addr
+ifconfig
+ip route / link
+
+sudo iwlist scan
+
+
+$ ip — Displays useful network details such as your IP address
+
+$ ip addr - Displays Device Alias Names with their MAC Address and IP Address/subnet class 
+ip addr  show <alias name> - displays a specific Device Alias Name MAC and IP Address
+
+Show Network Interface IPv4 Address configuration Default Gateway, IP Address 
+$ip -4 addr show dev <alias name> 
+
+$ ifconfig -a - Displays details about Network Devices 
+$ iwconfig displays wireless Network Interface
+
+$ ip link - Displays all the network interface Device Alias Names with device state Unknown,UP,Down and MAC Addresses
+$ip link show <alias name> - displays a specific Device Alias Name with device state and MAC Addresses
+
+
+List Default Gateway and Broadcast information and IP Address
+
+$ip route
+
+Enable/Disable Network Devices
+$ip link set <alias name> up/down of $ ifup/ifdown <alias name>   command enable/disables network device
+
+Add a static IP address to an interface/device
+sudo ip a add 000.000.000.000/24 dev <devicename>
+examples:
+sudo ip link set <devicename> down
+sudo ip link set <devicename> up
+
+Add a route to the routing table
+sudo ip route add 192.168.222.0/24 via 10.20.30.1
+
+IP address of website?
+
+drill <website name> or drill -x <ip address> for reverse DNS resolution
+
+ping <website/address> three times
+ping -c3 127.0.0.1 
+
+ss like netstat but can show more information
+
+ss -tua 
+show all TCP UCP ports and states
+
+-------------------
+|**MISCELLANEOUS**|
+-------------------
+Info coreutils command_name
+grep - The grep utility is used to inspect the contents of a file to find lines that match a specified search term.
+grep — Searches a specific file or set of files to see if a given string of text exists, and if it does, tells you where the text exists in those files. This command is extremely flexible (e.g. Use wild cards to search all files of a given type) and particularly useful for programmers (to find specific lines of code). 
+awk
+pushd
+popd
+service udev status
+systemctl status udev
+du -sh code
+netstat or ss the new command for protocol port statistics
+netstat -tulpn
+tail -f option log files new lines will be displayed on screen
+
+rsync -flags options source target:destination/folder/
+rsync -vrP --delete-after /home/morgan/documents/webfiles.morganswenson.net/ root@morganswenson.net:/var/www/morganswenson
+
+
+See which commands you use the most
+history | awk '{print $2}' | sort | uniq -c | sort -rn | head -10 
+
+Pipes  ->  |   Redirecting output of a program to another's input.
+    They are used to link commands together.  Pipes take the output of one command and route it to be used as input for a second command chained together.
+    Consult more online resources with information about pipes and their use as there are volumes.
+
+> and >> redirectors  -> Send output to a file instead of the terminal.
+    > is used to *overwrite* currently existing files contents and replace with the output from the new command.
+    >> is used to *append* information to currently existing files.  This is useful for logging.
+    Example: ps aux > processes.log  Sends the output of ps aux to the file processes.log for viewing the command output in a text editor and overwrites the current contents of the file. 
+
+tee -> Send output to both a file and the terminal
+    tee is used in conjunction with a ' | ' in order to take the command output and send it elsewhere.  This is useful if there are errors which fly by the screen before you can read them, this way whatever goes on the screen is also captured to a file.
+    Example: dmesg | tee boot.txt would run the command dmesg which shows the initial boot info, and the ' | ' sends the output of dmesg to tee, which then does its job by sending it to the terminal and to the log file boot.txt.
+
+File Execution -> So you want to execute files or programs from the terminal?  Make sure it's  marked executable.
+    The ./ operator can execute the file as a normal user provided you do not need root rights.  ./ literally means "in the current directory" so it does not work on files outside of the present directory.
+     
+    Need to execute a file not in the current directory?  You must pass the path to the proper executing program.  If it is a python program, it's python /path/to/file and if it is a shell file, it is sh /path/to/file as an example.  There are of course other programs, but these will be the most common for beginners.
+     
+    Need to execute a file with root rights because you received operation not permitted?  Prefix the command with sudo.  Thus, from the above example, sudo python /path/to/file will execute the script with root rights.
+su - use this to switch to the root user in the root home directory
+
+ 
+To execute a GUI program from the terminal?  Simply type the program name (case sensitive!) and it will launch.  This will render the current terminal unusable.  Closing the terminal while the program is open will kill the program.  A better way is to background the program, using program_name & and then typing the word exit at the terminal to close it and keep the process running set:
+$ <program-name> &
+
+Need to run a GUI program with root rights from the terminal?  Prefix it with gksudo or gksu and not sudo.  Using sudo to launch GUI applications is a bad habit and should be avoided.
+
+To open a file with the default program associated with the filetype use xdgopen commmand, set:
+$ xdgopen </path/filename>
+     
+    Do not, do *not* use sudo simply because something receives "Operation not permitted."  Keep in mind what you are doing as you can absolutely *destroy* systems by running commands in the wrong place with root rights.  This point cannot be emphasized enough.  Make sure your files come from reputable sources.
+
+Python
+you can launch a terminal and type in python3. This will give you the python prompt to interact with Python.
+But the best is to open the text editor and type there your script. Then you can execute it with: python3 ./path/to/your/script.py
+
+
+History list command history
+
+History -c deletes the current session of bash commands
+
+
+Shutdown
+shutdown -h|-r +m message 
+options 
++m where m = the number of minutes until shutdown is executed
+-h instructs to shutdown 
+-r instructs the system to reboot after shutdown
+-p powers off the machine
+message specifies a message to be sent to all users accompanying the standard shutdown notification
+command example: 
+# shutdown -h +15 It is time for a shutdown!
+Displays:
+The system is going down for a system halt in 15 minutes!
+It is time for a shutdown!
+
+
+
+Example commands
+
+open ~/Desktop/filename.mp4
+open -a "QuickTime Player" ~/Desktop/filename.mp4
+
+
+sudo nano /etc/apt/sources.list
+
+
+youtube-dl -F (list available files-formats in #'s)/ -f # (for a specific file #)/ -f bestaudio (just sound file)
+
+
+?Launch TORBROWSER: ./tor-browser_en-US/Browser/start-tor-browser &
+
+mint
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+gpg --fingerprint
+oracle_vbox_2016.asc --fingerprint
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install virtualbox-6.1
+
+
+Want to mount an iso like Daemon-Tools on Windows?  Linux has this functionality built in.  Simply create a directory somewhere, say /home/justin/isomount, and issue the command mount -o loop /path/to/myisofile.iso /home/justin/isomount and the contents will be mounted inside that folder.
+
+
+
+***To erase and format a thumbdrive***
+
+Step 1
+find the device location and name
+type in terminal:
+$ sudo fdisk -l
+open disk application and unmount drive (Disk-Gnome Disk Utility or with KDE partition manager or command line utilities by typing: $ sudo umount /dev/sdX1)
+
+Step 2
+erase data on disk
+DOUBLE CHECK EVERYTHING AFTER THIS STEP PRESSING ENTER CAN ERASE ALL DATA ON THE DRIVE OR DESTROY YOUR SYSTEM!!!
+
+Type in terminal:
+$ sudo wipefs --all /dev/sdX  (where sdX is the name of drive location)
+
+Step 3
+create a new partition table
+type in terminal:
+$ sudo cfdisk /dev/sdX
+
+For the thumb drive Select label type: dos Press enter
+Select: New
+by default it selects the maximum partition size for the flash drive
+Press enter
+Select: primary press enter
+Then select: Write
+Confirm you want to create a new partition table type: "yes" "y doesn't work" and press enter
+Select: Quit and press enter
+ this exits cfdisk utility
+
+Step 4
+format the disk and name the device
+type in terminal:
+$ sudo mkfs.vfat -n 'NEW DEVICE NAME' /dev/sdX1  (sdx1 because there is only 1 partition on the drive)
+i.e. sudo mkfs.vfat -n 'SANDISK EDGE' /dev/sdg1
+
